@@ -1,9 +1,9 @@
-import BaseAPI from '.baseApi';
+import BaseAPI from './baseApi';
 
 export class TweetsAPI extends BaseAPI {
-    static url = '/search/tweets.json'
+    url = '/search/tweets'
 
-    async getTweetByKeyword(keyword){
+    async getByKeyword(keyword){
         const result = await this.api.get(`${this.url}?q=${keyword}`)
         return result;
     }
