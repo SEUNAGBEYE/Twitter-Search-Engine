@@ -2,13 +2,17 @@ import React from 'react';
 
 import { TweetsAPI } from '../api/tweets';
 
+const initialTweets = {
+    results: [],
+    hashtags: []
+}
+
 const initialState = {
-    key: '',
-    type: 'user',
-    tweets: {
-        results: [],
-        hashtags: []
-    }
+    q: '',
+    type: 'tweet',
+    result_type: 'recent',
+    tweets: initialTweets,
+    isLoading: false
 };
 
 const { Provider, Consumer } = React.createContext(initialState);
@@ -23,22 +27,32 @@ export class APIProvider extends React.Component{
     }
 
     handleSearch = this.handleSearch.bind(this);
+    handleChangeSearch = this.handleChangeSearch.bind(this);
 
-    async handleSearch(key, type='tweet'){
+    async handleSearch({ result_type}){
         this.setState({
-            key,
-            type
+            result_type,
+            isLoading: true,
+            tweets: initialTweets
         })
-        const api = this.APIS[type]
-        const results = await api.getByKeyword(key);
+        const api = this.APIS[this.state.type]
+        const results = await api.getByKeyword({q: this.state.q, result_type});
         this.setState({
-            tweets: results.data
+            tweets: results.data,
+            isLoading: false
+        })
+    }
+
+    async handleChangeSearch(q){
+        this.setState({
+            q
         })
     }
 
     state = {
         ...initialState,
-        handleSearch: this.handleSearch
+        handleSearch: this.handleSearch,
+        handleChangeSearch: this.handleChangeSearch
     }
 
     render() {

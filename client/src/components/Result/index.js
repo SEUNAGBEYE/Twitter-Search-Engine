@@ -8,15 +8,15 @@ const Hashtag = ({hashtags, displayMostFrequent, style}) => (
     <div className="hashtags" style={style}>
         {
             displayMostFrequent ? hashtags.map(hashtag => (
-                    <span key={hashtag} className="hashtag">{`#${hashtag.text} : ${hashtag.count}`}</span>
+                    <span key={hashtag.text} className="hashtag">{`#${hashtag.text} : ${hashtag.count}`}</span>
             )) : (hashtags).map(hashtag => (
-                    <span key={hashtag} className="hashtag">{`#${hashtag.text}`}</span>
+                    <span key={hashtag.text} className="hashtag">{`#${hashtag.text}`}</span>
             ))
         }
     </div>
 )
 
-function Result({ results, hashtags }) {
+function Result({ results, hashtags, isLoading }) {
     return (
         <div className='results'>   
             <div className="hashtags-container">
@@ -26,13 +26,14 @@ function Result({ results, hashtags }) {
             <div className="result-item-container">
                 <h3>Tweets</h3>
                 {
-                    results.map(({user, id, text, created_at, entities}) =>{
+                    !isLoading ? results.map(({user, id, text, created_at, entities}) =>{
                         return (<div className='result-item' key={id}>
                             <div className="tweet-container">
                                 <div className="user-image-container">
                                     <img
-                                        src={user.profile_background_image_url}
+                                        src={user.profile_image_url}
                                         className="user-image"
+                                        alt={user.name}
                                     />
                                 </div>
                                 <div className="tweet-info">
@@ -47,7 +48,7 @@ function Result({ results, hashtags }) {
                             </div>
                         </div>)}
 
-                    )
+                    ): <div className="loader"><div></div><div></div><div></div></div>
                 }
             </div>
 
@@ -57,7 +58,7 @@ function Result({ results, hashtags }) {
   
 const ResultContainer = () => (
     <APIConsumer>
-        { ({ tweets }) => <Result {...tweets}/>}
+        { ({ tweets, isLoading }) => <Result {...tweets} isLoading={isLoading}/>}
     </APIConsumer>
 )
 

@@ -10,8 +10,8 @@ class TweetsAPI extends BaseAPI {
         const hash = {};
         let hashtags = []
         const keyword = request.query.q;
-        const filter = request.query.filter || 'recent';
-        let results = await this.api.get(`${this.url}?q=${keyword}&result_type=${filter}&count=${this.count}`)
+        const result_type = request.query.result_type || 'recent';
+        let results = await this.api.get(`${this.url}?q=${keyword}&result_type=${result_type}&count=${this.count}`)
         results = results.data.statuses.map(tweet => {
             tweet.entities.hashtags.map(hashtag => {
                 let value = hashtag.text
