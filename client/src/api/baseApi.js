@@ -1,7 +1,7 @@
 import { AxiosClient } from './clients/axiosClient';
 
 class BaseAPI {
-    baseURL = 'http://localhost:3001/api';
+    baseURL =  `${process.env.REACT_APP_HOST_API}/api`;
 
     constructor(apiClient = AxiosClient) {
         this.api = new apiClient(this.baseURL)

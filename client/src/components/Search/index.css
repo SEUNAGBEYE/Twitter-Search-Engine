@@ -104,5 +104,20 @@ input[type=text] {
     .box::before {
       width: 60%;
     }
+
+  }
+  @media only screen and (max-width: 1130px) and (min-width: 859px) {
+    /* For Tablet: */
+
+    .box::before {
+      width: 20%;
+    }
+  }
+  @media only screen and (max-width: 768px) and (min-width: 426px){
+    /* For Tablet: */
+
+    .box::before {
+      width: 30%;
+    }
   }
   

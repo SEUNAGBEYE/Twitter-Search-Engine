@@ -1,8 +1,8 @@
 import React from 'react';
+import moment from 'moment'
 
 import { APIConsumer } from '../../provider/api'
 import './index.css'
-import moment from 'moment'
 
 const Hashtag = ({hashtags, displayMostFrequent, style}) => (
     <div className="hashtags" style={style}>

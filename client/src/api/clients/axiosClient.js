@@ -5,10 +5,7 @@ export class AxiosClient extends BaseClient {
     constructor(baseURL){
         super(baseURL)
         this.client = axios.create({
-            baseURL,
-            headers: {
-                Authorization: `Bearer ${process.env.REACT_APP_BEARER_TOKEN}`,
-            }
+            baseURL
         });
         return this.client;
     }
